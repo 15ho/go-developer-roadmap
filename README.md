@@ -55,6 +55,23 @@
 
 #### defer
 - [Go defer 闭包问题](https://mp.weixin.qq.com/s/lELMqKho003h0gfKkZxhHQ)
+> 文章补充: [Fixing For Loops in Go 1.22](https://go.dev/blog/loopvar-preview)
+```go
+func main() {
+ var whatever [6]struct{}
+ for i := range whatever {
+  // go1.22遍历每次会创建新的变量
+  defer func() {
+   fmt.Println(i)
+  }()
+ }
+}
+// before go1.22
+// output: 5 5 5 .. 5
+
+// go1.22+
+// output: 5 4 3 .. 0
+```
 
 #### map/slice
 - [为什么 Go map 和 slice 是非线程安全的？](https://mp.weixin.qq.com/s/TzHvDdtfp0FZ9y1ndqeCRw)
